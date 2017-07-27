@@ -1,0 +1,62 @@
+﻿@model Ugurcan.Models.Tablolar.Slider
+@{
+    ViewBag.Title = "Slider Oluştur";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .bootstrap-tagsinput {
+        width: 100%;
+    }
+
+    .validation-summary-errors {
+        color: #ffffff;
+        font-size: 16px;
+        font-family: 'Trebuchet MS';
+        border-radius: 5px;
+        height: auto;
+        width: 700px;
+        background-color: #ff5905;
+    }
+
+        .validation-summary-errors li {
+            list-style-type: none;
+        }
+</style>
+
+
+
+@using (Html.BeginForm("SliderCreate", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+
+    <div class="panel panel-default">
+        <header class="panel-heading">@ViewBag.Title</header>
+        <div class="panel-body">
+            @Html.ValidationSummary()
+            
+            <div class="form-group">
+                <label for="exampleInputEmail1"> Başlık</label>
+                @Html.TextBoxFor(x => x.Baslik, new { id = "Baslik", required = "required", placeholder = "Slider Başlık" })
+            </div>
+            
+            <div class="form-group">
+                <label for="exampleInputPassword1"> Açıklama </label>
+                @Html.TextAreaFor(x => x.Aciklama, new { rows = "7", @class = "form-control", placeholder = "Slider Açıklama", })
+            </div>
+           
+
+            <div class="form-group">
+                <label style="color:#ff6a00;"> Lütfen Güzel Bir Resim Seçiniz</label><br />
+                <label for="exampleInputPassword1">Resim</label>
+                <input type="file" name="ResimURL" accept="image/*" class="form-control" />
+            </div>
+
+            @*<button type="submit" class="btn btn-primary btn-lg" id="SliderEkle">Kaydet</button>*@
+            <button type="submit" class="btn btn-primary btn-lg">Oluştur</button>
+        </div>
+    </div>
+
+
+}

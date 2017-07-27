@@ -1,0 +1,5 @@
+﻿@model IEnumerable<Ugurcan.Models.Tablolar.Category>
+@foreach (var item in Model)
+{
+    <li><a href="Home/CategoryProduct/@item.ID" >@item.KategoriAdi</a></li>
+}

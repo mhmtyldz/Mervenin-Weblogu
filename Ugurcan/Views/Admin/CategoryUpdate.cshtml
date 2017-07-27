@@ -1,0 +1,18 @@
+﻿@model Ugurcan.Models.Tablolar.Category
+@{
+    ViewBag.Title = "Kategori Güncelle";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section class="header-account"></section>
+@using (Html.BeginForm("CategoryUpdate", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+   
+        <label><b>Kategori Adı</b></label>
+        @Html.TextBoxFor(x => x.KategoriAdi, new { id = "login-username", name = "uname", required = "required", placeholder = "Kategori Adı", maxlength = 50 })
+        <button type="submit">Güncelle</button>
+   
+}
+

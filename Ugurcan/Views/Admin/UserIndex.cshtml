@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Ugurcan.Models.Tablolar.Users>
+@{
+    ViewBag.Title = "UserIndex";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<section class="header-account"></section>
+
+@if (TempData["Bilgi"] != null)
+{
+    <div class="alert alert-success" role="alert">@TempData["Bilgi"]</div>
+}
+<h4>Kullanıcı Listesi</h4>
+
+<div class="table-responsive">
+
+    <table id="mytable" class="table table-bordred table-striped">
+        <thead>
+
+        <td>Ad Soyad</td>
+        <th>Kullanıcı Email</th>
+        <th>Kayıt Olma Tarihi</th>
+        <th>Onay Durumu</th>
+        <th>Sil</th>
+        </thead>
+        <tbody>
+            @if (Model == null)
+            {
+                <tr>
+
+                    <td>0</td>
+                    <td>No User Name</td>
+                    <td>No User Email</td>
+                    <td>00.00.0000</td>
+                    <td><p title="Delete"><a href="#" class="btn btn-danger btn-xs" data-title="Delete"></p></td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+
+
+                        <td>@item.AdSoyad</td>
+                        <td>@item.Email</td>
+                        <td>@item.EklenmeTarihi.ToString("dd-MMM-yyyy")</td>
+                        
+                        @if (item.OnayliMi == true)
+                        {
+                            <td><a href="/Admin/UserAccept/@item.ID" class="btn btn-success">Onaylı</a></td>
+                        }
+                        else
+                        {
+                            <td><a href="/Admin/UserAccept/@item.ID" class="btn btn-danger btn-sm">Onaysız</a></td>
+                        }
+                        <td><a href="#" data-id="@item.ID" id="UserSil" class="btn btn-danger btn-sm"><span class="fa fa-trash-o"></span>Sil</a></td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+    <div class="clearfix"></div>
+
+
+</div>
+<script type="text/javascript">
+    $(document).on("click", "#UserSil", function () {
+        gelenUser = new Object();
+        gelenUser.ID = $(this).attr("data-id");
+
+        var silTR = $(this).closest("tr");
+
+        swal({
+            title: "Kullanıcı Silinecek? ",
+            text: "Emin misiniz! ",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DDD6B55",
+            confirmbuttonText: "Evet,Hayır",
+            closeOnConfirm: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: '/Admin/UserDelete',
+                    type: "POST",
+                    data: gelenUser,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Success) {
+                            swal("Silindi!", "Kullanıcı Silindi!", "success")
+                            silTR.fadeOut(600, function () {
+                                silTR.remove();
+                            })
+
+                        }
+
+                        else {
+                            $.notify(response.Message, "error");
+                        }
+                    }
+                })
+
+            }
+
+        }
+        )
+    })
+</script>

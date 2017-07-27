@@ -1,0 +1,268 @@
+﻿@{
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<title>@ViewBag.Title</title>
+<style>
+    .glyphicon {
+        margin-right: 10px;
+    }
+
+    .panel-body {
+        padding: 0px;
+    }
+
+        .panel-body table tr td {
+            padding-left: 15px;
+        }
+
+        .panel-body .table {
+            margin-bottom: 0px;
+        }
+</style>
+<section class="header-account"></section>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div class="panel-group" id="accordion">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                WebSitem
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseSix" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-sitemap"></span><a href="/Home/Anasayfa">Siteyi Gör</a>
+                                    </td>
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                Kategori
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                            <table class="table">
+
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-plus"></span><a href="/Admin/CategoryCreate"> Yeni Kategori</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-list-ol"></span><a href="/Admin/CategoryIndex">Kategori Listesi</a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                Blog Yazılarım
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-plus"></span><a href="/Admin/BlogCreate">Yeni Blog Yazısı</a>
+                                    </td>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-list-ol"></span><a href="/Admin/BlogIndex">Blog Listesi</a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                Mesajlarım
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+
+                                <tr>
+                                    <td>
+                                        <span class="fa  fa-list-ol"></span><a href="/Admin/MessageIndex" class="text-danger">
+                                            Mesaj Listem 
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                Hakkımda
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-plus"></span><a href="/Admin/AboutCreate">Hakkımda Oluştur</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-list-ol"></span><a href="/Admin/AboutIndex">Hakkımda Listem</a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                                Kullanıcılar
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-list-ol"></span><a href="/Admin/UserIndex">Kullanıcı Listem</a>
+                                    </td>
+                                </tr>
+                                @if (Session["uyeid"]!=null)
+                                {
+                                     <tr>
+                                    <td>
+                                        <span class="fa fa-sign-out"></span><a href="/Account/Logout">Çıkış</a>
+                                    </td>
+                                </tr>
+                                }
+                               
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+                                Slider
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseSeven" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-plus"></span><a href="/Admin/SliderCreate">Slider Oluştur</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-list-ol"></span><a href="/Admin/SliderIndex">Slider Listesi</a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+                                Resimler
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseEight" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-plus"></span><a href="/Admin/ImageCreate">Resim Ekle</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-list-ol"></span><a href="/Admin/ImageIndex">Resim Listem</a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine">
+                                Yorumlar
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseNine" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-list-ol"></span><a href="/Admin/YorumIndex">Yorum Listesi</a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-9">
+            <div class="well">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+

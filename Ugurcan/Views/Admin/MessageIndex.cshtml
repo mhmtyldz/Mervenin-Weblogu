@@ -1,0 +1,110 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model PagedList.IPagedList<Ugurcan.Models.Tablolar.Message>
+@{
+    ViewBag.Title = "Gelen Mesajlar";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<section class="header-account"></section>
+
+
+
+
+<div class="table-responsive">
+
+    <table id="mytable" class="table table-bordred table-striped">
+        <thead>
+        <th>Ad Soyad</th>
+        <th>Konu</th>
+        <th>Gönderilme Tarihi</th>
+        <th>Ayrıntı</th>
+        <th>Sil</th>
+        </thead>
+        <tbody>
+            @if (Model == null)
+            {
+                <tr>
+
+                    <td>0</td>
+                    <td>No Message</td>
+                    <td>00.00.0000</td>
+
+                    <td><p title="Edit"><a href="#" class="btn btn-primary btn-xs" data-title="Edit"><span class="fa fa-user"></span></a></p></td>
+                    <td><p title="Delete"><a href="#" class="btn btn-danger btn-xs" data-title="Delete"></p></td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.AdSoyad</td>
+                        <td>@item.Konu</td>
+                        <td>@item.EklenmeTarihi</td>
+                        <td><a href="/Admin/MessageDetail/@item.ID" class="btn btn-info btn-sm"><span class=" fa fa-pencil-square-o"></span>Detay</a></td>
+                        <td><a href="#" data-id="@item.ID" id="MessageSil" class="btn btn-danger btn-sm"><span class="fa fa-trash-o"></span>Sil</a></td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+    <div class="clearfix"></div>
+    <ul class="pagination pull-right">
+        @Html.PagedListPager(Model, Sayfa => Url.Action("MessageIndex", new { Sayfa }), PagedListRenderOptions.Classic)
+    </ul>
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    $(document).on("click", "#MessageSil", function () {
+        gelenMessage = new Object();
+        gelenMessage.ID = $(this).attr("data-id");
+
+        var silTR = $(this).closest("tr");
+
+        swal({
+            title: "Mesaj Silinecek? ",
+            text: "Emin misiniz ! ",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DDD6B55",
+            confirmbuttonText: "Evet,Hayır",
+            closeOnConfirm: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: '/Admin/MessageDelete',
+                    type: "POST",
+                    data: gelenMessage,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Success) {
+                            swal("Silindi!", "Mesaj Başarıyla Silinmiştir!", "success")
+                            silTR.fadeOut(600, function () {
+                                silTR.remove();
+                            })
+
+                        }
+
+                        else {
+                            $.notify(response.Message, "error");
+                        }
+                    }
+                })
+
+            }
+
+        }
+        )
+    })
+</script>

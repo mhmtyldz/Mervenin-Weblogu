@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Ugurcan.Models.Tablolar.About>
+@{
+    ViewBag.Title = "Hakkında Oluştur";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<section class="header-account"></section>
+
+@if (TempData["Bilgi"] != null)
+{
+    <div class="alert alert-success" role="alert">@TempData["Bilgi"]</div>
+}
+@if (TempData["BilgiDanger"] != null)
+{
+    <div class="alert alert-danger" role="alert">@TempData["BilgiDanger"]</div>
+}
+
+<a href="/Admin/AboutCreate/" class="btn btn-primary">Hakkında Oluştur</a><br /><br />
+<div class="table-responsive">
+
+    <table id="mytable" class="table table-bordred table-striped">
+        <thead>
+        <th>#</th>
+        <td>Resim</td>
+        <th>Hakkımda İçerik</th>
+        <th>Oluşturulma Tarihi</th>
+        <th>Sil</th>
+        </thead>
+        <tbody>
+            @if (Model == null)
+            {
+                <tr>
+
+                    <td>0</td>
+                    <td>No Image</td>
+                    <td>No About Comment</td>
+                    <td>00.00.0000</td>
+                    <td><p title="Delete"><a href="#" class="btn btn-danger btn-xs" data-title="Delete"></p></td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.ID</td>
+                        <td><img src="@item.ResimUrl" class="img-responsive .img-thumbnail .img-circle" width=200 height=200></td>
+                        <td>
+                        @Html.Raw(item.Aciklama)
+                        </td>
+                        <td>@item.EklenmeTarihi</td>
+
+                        <td><a href="#" data-id="@item.ID" id="AboutSil" class="btn btn-danger btn-sm"><span class="fa fa-trash-o"></span>Sil</a></td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+    <div class="clearfix"></div>
+
+
+</div>
+<script type="text/javascript">
+    $(document).on("click", "#AboutSil", function () {
+        gelenAbout = new Object();
+        gelenAbout.ID = $(this).attr("data-id");
+
+        var silTR = $(this).closest("tr");
+
+        swal({
+            title: "Hakkında Silinecek? ",
+            text: "Emin misiniz! ",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DDD6B55",
+            confirmbuttonText: "Evet,Hayır",
+            closeOnConfirm: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: '/Admin/AboutDelete',
+                    type: "POST",
+                    data: gelenAbout,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Success) {
+                            swal("Silindi!", "Hakkında Kısmı Silindi!", "success")
+                            silTR.fadeOut(600, function () {
+                                silTR.remove();
+                            })
+
+                        }
+
+                        else {
+                            $.notify(response.Message, "error");
+                        }
+                    }
+                })
+
+            }
+
+        }
+        )
+    })
+</script>

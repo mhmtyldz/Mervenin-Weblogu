@@ -1,0 +1,67 @@
+﻿@model Ugurcan.Models.Tablolar.About
+@{
+    ViewBag.Title = "About Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+
+    .validation-summary-errors {
+        border: 2px solid #a94442;
+        background-color: #d76663;
+        border-radius: 8px;
+    }
+
+        .validation-summary-errors ul {
+            list-style: none;
+            padding: 10px;
+            color: #fff;
+        }
+
+</style>
+
+
+<section class="header-account"></section>
+@using (Html.BeginForm("AboutCreate", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    
+     <div class="form-group">
+            <label style="color:#ff6a00;">Lütfen Güzel Bir Resim Seçiniz</label><br />
+            <label for="exampleInputPassword1">Resim </label>
+            <input type="file" name="ResimURL" accept="image/*" class="form-control" />
+        </div><hr />
+
+    
+        <div class="form-group">
+            <label style="color:#ff6a00;">Minumum 30 Maximum 3000 olabilir doldurulması zorunludur.</label><br />
+            <label for="comment">Açıklama:</label>
+            @Html.EditorFor(x => x.Aciklama, new {  @class = "form-control", required = "required", placeholder = "Hakkında Açıklaması", })
+        </div>
+       
+       
+        <button type="submit">Oluştur</button>
+    
+}
+

@@ -1,0 +1,73 @@
+﻿@model Ugurcan.Models.Tablolar.Users
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<br /><br />
+<section class="header-account"></section>
+
+<div class="container">
+    <div class="row">
+        <div class="container">
+            <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">Giriş Yap</div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="Register">Kayıt Ol?</a></div>
+                    </div>
+                    <div style="padding-top:30px" class="panel-body">
+
+                        @if (TempData["Bilgi"] != null)
+                        {
+                            <div id="login-alert" class="alert alert-danger col-sm-12">
+                                @TempData["Bilgi"].ToString();
+                            </div>
+                        }
+
+                        @if (TempData["Bilgi3"] != null)
+                        {
+                            <div id="login-alert" class="alert alert-warning col-sm-12">
+                                @TempData["Bilgi3"].ToString();
+                            </div>
+                        }
+
+
+                        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "loginform", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", id = "login-email", required = "Zorunlu", type = "email", placeholder = "Email Adres" })
+                            </div>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                @Html.TextBoxFor(x => x.Sifre, new { @class = "form-control", id = "login-sifre", required = "Zorunlu", type = "password", placeholder = "Şifre" })
+                            </div>
+
+                            <div style="margin-top:10px" class="form-group">
+                                <!-- Button -->
+                                <div class="col-sm-12 controls">
+                                    <button type="submit" class="btn btn-success">Giriş Yap</button>
+
+                                </div>
+                            </div>
+
+
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<br /><br /><br />

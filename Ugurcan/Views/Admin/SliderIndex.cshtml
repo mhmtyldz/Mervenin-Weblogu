@@ -1,0 +1,120 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model PagedList.IPagedList<Ugurcan.Models.Tablolar.Slider>
+
+@{
+    ViewBag.Title = "SliderIndex";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<section class="header-account"></section>
+
+
+
+@if (TempData["Bilgi"] != null)
+{
+    <div class="alert alert-success" role="alert">@TempData["Bilgi"]</div>
+}
+
+
+@if (TempData["BilgiDanger"] != null)
+{
+    <div class="alert alert-danger" role="alert">@TempData["BilgiDanger"]</div>
+}
+
+<div class="table-responsive">
+    <a href="/Admin/SliderCreate"  class="btn btn-primary" >Yeni Slider</a>
+    <table id="mytable" class="table table-bordred table-striped">
+        <thead>
+        <th>Resim</th>
+        <th>Slider Başlık</th>
+        <th>Oluşturulma Tarihi</th>
+        <th>Sil</th>
+        </thead>
+        <tbody>
+            @if (Model == null)
+            {
+                <tr>
+
+                    <td>No Image</td>
+                    <td>No Slider Name</td>
+                    <td>No CreatedDate</td>
+                    <td><p title="Delete"><a href="#" class="btn btn-danger btn-xs" data-title="Delete"></p></td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td style="width:20%; width:20%;"><img src="@item.ResimURL" class="img-rounded " alt="@item.Baslik" width="150" height="150"></td>
+                        <td>@item.Baslik</td>
+                        <td style="width:10%;">@item.EklenmeTarihi.ToShortDateString()</td>
+                        <td style="width:10%;"><a href=" #" data-id="@item.ID" id="SliderSil" class="btn btn-danger btn-sm"><span class="fa fa-trash-o"></span>Sil</a></td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+    <div class="clearfix"></div>
+    <ul class="pagination pull-right">
+        @Html.PagedListPager(Model, Sayfa => Url.Action("SliderIndex", new { Sayfa }), PagedListRenderOptions.Classic)
+    </ul>
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    $(document).on("click", "#SliderSil", function () {
+        gelenSlider = new Object();
+        gelenSlider.ID = $(this).attr("data-id");
+
+        var silTR = $(this).closest("tr");
+
+        swal({
+            title: "Slider Silinecek?",
+            text: "Emin Misiniz! ",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DDD6B55",
+            confirmbuttonText: "Evet,Hayır",
+            closeOnConfirm: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: '/Admin/SliderDelete',
+                    type: "POST",
+                    data: gelenSlider,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Success) {
+                            swal("Silindi!", "Slider Silme İşleminiz Başarılı!", "success")
+                            silTR.fadeOut(600, function () {
+                                silTR.remove();
+                            })
+
+                        }
+
+                        else {
+                            $.notify(response.Message, "error");
+                        }
+                    }
+                })
+
+            }
+
+        }
+        )
+    })
+</script>
+
+

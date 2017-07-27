@@ -1,0 +1,76 @@
+﻿@model Ugurcan.Models.Tablolar.Message
+@{
+    ViewBag.Title = "MessageDetail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style type="text/css">
+    .aciklama {
+        color: #635e5e;
+        font-weight: bold;
+        font-family: 'Trebuchet MS';
+        font-size: 15px;
+    }
+</style>
+<div>
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th style="width:20%;color:#ff6a00">İşlemler</th>
+                <th style="width: 80%;color: #ff6a00">Durum</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Ad Soyad</th>
+                <td class="aciklama">
+                    @(Model.AdSoyad)
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td class="aciklama">
+                    @(Model.Email)
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Telefon Numarası</th>
+                <td class="aciklama">
+                    @(Model.TelNo)
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Konu</th>
+                <td class="aciklama">
+                    @(Model.Konu)
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Mesaj</th>
+                <td class="aciklama">
+                    @(Model.Mesaj)
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">Gönderilme Tarihi</th>
+                <td class="aciklama">
+                    @(Model.EklenmeTarihi)
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row"></th>
+                <td class="aciklama">
+                    <p>
+                        <a style="margin-left:10px;" href="/Admin/MessageIndex/" class="btn btn-primary">Geri Dön</a>
+                    </p>
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+
+</div>
